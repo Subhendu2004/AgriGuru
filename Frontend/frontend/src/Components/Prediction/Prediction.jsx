@@ -1,11 +1,11 @@
-// src/Pages/Prediction.jsx
 import React, { useState } from "react";
-import "./Prediction.css"; // Optional
+import "./Prediction.css";
+import axios from "axios";
 
 const Prediction = () => {
   const [formData, setFormData] = useState({
     Nitrogen: "",
-    Phosporus: "",
+    Phosporus: "", // Matches backend spelling
     Potassium: "",
     Temperature: "",
     Humidity: "",
@@ -13,41 +13,122 @@ const Prediction = () => {
     Rainfall: "",
   });
 
+  const [prediction, setPrediction] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
 
-    const result = await response.json();
-    alert(`Prediction: ${result.prediction}`);
+    const numericFormData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, parseFloat(value)])
+    );
+
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/predict", numericFormData);
+      setPrediction(response.data.prediction);
+    } catch (error) {
+      console.error("Prediction error:", error);
+      setPrediction("Prediction failed. Check the backend.");
+    }
   };
 
   return (
-    <div className="prediction-page">
-      <h1>Crop Recommendation System</h1>
-      <form onSubmit={handleSubmit} className="form-container">
-        {["Nitrogen", "Phosporus", "Potassium", "Temperature", "Humidity", "pH", "Rainfall"].map((field) => (
-          <div key={field} className="form-group">
-            <label>{field}:</label>
-            <input
-              type="number"
-              name={field}
-              value={formData[field]}
-              onChange={handleChange}
-              step="0.1"
-              required
-            />
+    <div className="prediction-wrapper">
+      <div className="glass-form">
+        <h1 className="title">Crop Recommendation System</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Nitrogen:</label>
+              <input
+                type="number"
+                name="Nitrogen"
+                value={formData.Nitrogen}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Phosphorus:</label>
+              <input
+                type="number"
+                name="Phosporus"
+                value={formData.Phosporus}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Potassium:</label>
+              <input
+                type="number"
+                name="Potassium"
+                value={formData.Potassium}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
-        ))}
-        <button type="submit">Predict Crop</button>
-      </form>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Temperature:</label>
+              <input
+                type="number"
+                name="Temperature"
+                value={formData.Temperature}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Humidity:</label>
+              <input
+                type="number"
+                name="Humidity"
+                value={formData.Humidity}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>pH:</label>
+              <input
+                type="number"
+                name="pH"
+                value={formData.pH}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group full">
+              <label>Rainfall:</label>
+              <input
+                type="number"
+                name="Rainfall"
+                value={formData.Rainfall}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit">Predict Crop</button>
+        </form>
+
+        {prediction && (
+          <div className="result">
+            <h3>Recommended Crop:</h3>
+            <p>{prediction}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

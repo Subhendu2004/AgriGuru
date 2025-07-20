@@ -17,7 +17,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${extended ? "extended" : "collapsed"}`}>
       <div className="top-section">
         <IoMenu
           onClick={() => setExtended(!extended)}

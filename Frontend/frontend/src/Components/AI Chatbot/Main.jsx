@@ -30,37 +30,35 @@ const Main = () => {
       <div className="main-content">
         {/* Top bar */}
         <div className="top-bar">
-          <p>Gemini</p>
-          <FaUserCircle />
+          
+        
         </div>
 
         {/* Greeting or Chat section */}
         {!showResult ? (
           <>
             <div className="greeting">
-              <p>
-                <span>Hello, Arya.</span>
-              </p>
+              
               <p>How can I help you today?</p>
             </div>
 
             <div className="suggestions">
-              <div className="suggestion-card" onClick={() => onSent("Suggest top 10 webseries")}>
-                <p>Suggest top 10 webseries.</p>
-                <FaCompass className="card-icon" />
-              </div>
-              <div className="suggestion-card" onClick={() => onSent("What is loop in Javascript?")}>
-                <p>What is loop in Javascript?</p>
-                <FaLightbulb className="card-icon" />
-              </div>
-              <div className="suggestion-card" onClick={() => onSent('Who is known as the "Mother of Dragons"?')}>
-                <p>Who is known as the "Mother of Dragons"?</p>
-                <FaMessage className="card-icon" />
-              </div>
-              <div className="suggestion-card" onClick={() => onSent("Who sits on the Iron Throne at the end of the series?")}>
-                <p>Who sits on the Iron Throne at the end of the series?</p>
-                <FaCode className="card-icon" />
-              </div>
+             <div className="suggestion-card" onClick={() => onSent("What crop is best for loamy soil in West Bengal?")}>
+    <p>What crop is best for loamy soil in West Bengal?</p>
+    <FaCompass className="card-icon" />
+  </div>
+              <div className="suggestion-card" onClick={() => onSent("Which fertilizers are suitable for paddy cultivation?")}>
+    <p>Which fertilizers are suitable for paddy cultivation?</p>
+    <FaLightbulb className="card-icon" />
+  </div>
+               <div className="suggestion-card" onClick={() => onSent("How to protect crops from pest infestation organically?")}>
+    <p>How to protect crops from pest infestation organically?</p>
+    <FaMessage className="card-icon" />
+  </div>
+                <div className="suggestion-card" onClick={() => onSent("What is the ideal rainfall for growing wheat?")}>
+    <p>What is the ideal rainfall for growing wheat?</p>
+    <FaCode className="card-icon" />
+  </div>
             </div>
           </>
         ) : (
@@ -108,7 +106,7 @@ const Main = () => {
           </div>
 
           <p className="disclaimer">
-            Gemini may display inaccurate info, including about people, so
+            This chatbot may display inaccurate info, including about people, so
             double-check its responses.
           </p>
         </div>
